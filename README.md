@@ -205,4 +205,4 @@ This guide is for **educational purposes only**. Use it responsibly and only wit
 
 ---
 
-Would you like additional suggestions for layout or more example screenshots? 😊
+If you have any issues, you can create a issue at ISSUE section.

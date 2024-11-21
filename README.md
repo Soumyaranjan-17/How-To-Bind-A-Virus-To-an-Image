@@ -24,6 +24,8 @@
 
 ## ✍️ Steps to Bind msfvenom Payload with an Image  
 
+### Step 0: 🛡️ Note: This payload only works on machine with security features *OFF* (firewall, Window real time protection, virus and threat protection etc. ) 
+
 ### Step 1: 🌐 Find Your IP Address and Choose a Port  
 1. Open Kali Linux and find your IP address:  
    ```bash
